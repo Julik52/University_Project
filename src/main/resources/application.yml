@@ -1,0 +1,29 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://dpg-d0sqc56mcj7s73f9loeg-a/par_db_university
+    username: par_db_university_user
+    password: VEHarMvIY8CmmfLnz8h1gwMTZchhT2tY
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres
+
+  elasticsearch:
+    uris: http://localhost:9200/
+    username: springuser
+    password: 123456
+
+
+jwt:
+  secret: mysecretkeymysecretkeymysecretkeymysecretkey
+  expiration: 3600000
+
+

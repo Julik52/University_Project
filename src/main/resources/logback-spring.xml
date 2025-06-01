@@ -1,0 +1,43 @@
+<configuration>
+    <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/app-logs.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/app-logs.%d{yyyy-MM-dd}.json</fileNamePattern>
+            <nextHistory>7</nextHistory>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <logger name="com.example.UniTask3.controller.AdminController" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE"/>
+    </logger>
+
+    <logger name="com.example.UniTask3.controller.AuthController" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE"/>
+    </logger>
+
+    <logger name="com.example.UniTask3.controller.CourseController" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE"/>
+    </logger>
+
+    <logger name="com.example.UniTask3.controller.DashboardController" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE"/>
+    </logger>
+
+    <logger name="com.example.UniTask3.controller.EnrollmentController" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE"/>
+    </logger>
+
+    <logger name="com.example.UniTask3.controller.StudentController" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE"/>
+    </logger>
+
+    <logger name="com.example.UniTask3.controller.WebController" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="JSON_FILE"/>
+    </root>
+
+</configuration>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Panel</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Admin Panel</span>
+        <form class="d-flex" role="logout">
+            <button class="btn btn-outline-danger" type="button" onclick="logout()">Log Out</button>
+        </form>
+    </div>
+</nav>
+<div class="container mt-4">
+    <h1>Admin Panel</h1>
+
+    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="students" aria-selected="true">Students</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab" aria-controls="courses" aria-selected="false">Courses</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="enrollments-tab" data-bs-toggle="tab" data-bs-target="#enrollments" type="button" role="tab" aria-controls="enrollments" aria-selected="false">Enrollments</button>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-3" id="adminTabsContent">
+
+        <div class="tab-pane fade show active" id="students" role="tabpanel" aria-labelledby="students-tab" tabindex="0">
+
+            <h3>Students</h3>
+
+            <div class="card mb-3 border-secondary">
+                <div class="card-header bg-secondary text-white">
+                    <strong>Student Search by ID</strong>
+                </div>
+                <div class="card-body">
+                    <form id="student-search-form" class="row g-3" novalidate>
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" id="searchStudentId" placeholder="Student ID" required min="1" />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-secondary">Find Student</button>
+                        </div>
+                    </form>
+                    <h4 class="mt-3">Student Info</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th><th>Name</th><th>Email</th><th>Group Name</th>
+                        </tr>
+                        </thead>
+                        <tbody id="student-info-table"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <strong>Student list</strong>
+                </div>
+                <div class="card-body">
+                    <form id="student-form" class="row g-3" novalidate>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="studentName" placeholder="Name" required />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="email" class="form-control" id="studentEmail" placeholder="Email" required />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="studentGroupName" placeholder="Group Name" required />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Add Student</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <h4 class="mt-3">Students List</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th><th>Name</th><th>Email</th><th>Group Name</th>
+                </tr>
+                </thead>
+                <tbody id="students-table"></tbody>
+            </table>
+        </div>
+
+
+        <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab" tabindex="0">
+            <h3>Courses</h3>
+            <div class="card mb-3 border-secondary">
+                <div class="card-header bg-secondary text-white">
+                    <strong>Course Search by ID</strong>
+                </div>
+                <div class="card-body">
+                    <form id="course-search-form" class="row g-3" novalidate>
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" id="searchCourseId" placeholder="Course ID" required min="1" />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-secondary">Find Course</button>
+                        </div>
+                    </form>
+                    <h4 class="mt-3">Course Info</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th><th>Title</th><th>Credits</th>
+                        </tr>
+                        </thead>
+                        <tbody id="course-info-table"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <strong>Course list</strong>
+                </div>
+                <div class="card-body">
+
+                    <form id="course-form" class="row g-3" novalidate>
+
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="courseTitle" placeholder="Course Title" required />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" id="courseCredits" placeholder="Credits" required min="1" />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Add Course</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <h4 class="mt-3">Courses List</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th><th>Title</th><th>Credits</th>
+                </tr>
+                </thead>
+                <tbody id="courses-table"></tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane fade" id="enrollments" role="tabpanel" aria-labelledby="enrollments-tab" tabindex="0">
+            <h3>Enrollments</h3>
+
+            <div class="card mb-3 border-secondary">
+                <div class="card-header bg-secondary text-white">
+                    <strong>Student's Courses Filter</strong>
+                </div>
+                <div class="card-body">
+                    <form id="student-courses-form" class="row g-3" novalidate>
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" id="filterStudentId" placeholder="Student ID" required min="1" />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-secondary">Show Student's Courses</button>
+                        </div>
+                    </form>
+                    <h4 class="mt-3">Student's Courses</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Course ID</th><th>Title</th><th>Credits</th>
+                        </tr>
+                        </thead>
+                        <tbody id="student-courses-table"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <strong>Enrollment list</strong>
+                </div>
+                <div class="card-body">
+                    <form id="enrollment-form" class="row g-3" novalidate>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" id="enrollmentStudentId" placeholder="Student ID" required min="1" />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" id="enrollmentCourseId" placeholder="Course ID" required min="1" />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" id="enrollmentDate" placeholder="Enrollment Date" required />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Add Enrollment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <h4 class="mt-3">Enrollments List</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th><th>Student ID</th><th>Course ID</th><th>Enrollment Date</th>
+                </tr>
+                </thead>
+                <tbody id="enrollments-table"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    function loadStudents() {
+        fetch('/students')
+            .then(res => res.json())
+            .then(data => {
+                const table = data.map(student => `
+                <tr>
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.email}</td>
+                    <td>${student.groupName}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStudent(${student.id})">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+                document.getElementById('students-table').innerHTML = table;
+            })
+            .catch(err => console.error('Failed to load students:', err));
+    }
+
+    function loadCourses() {
+        fetch('/courses')
+            .then(res => res.json())
+            .then(data => {
+                const table = data.map(course => `
+            <tr>
+                <td>${course.id}</td>
+                <td>${course.title}</td>
+                <td>${course.credits}</td>
+                <td>
+                  <button class="btn btn-danger btn-sm" onclick="deleteCourse(${course.id})">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+                document.getElementById('courses-table').innerHTML = table;
+            })
+            .catch(err => console.error('Failed to load courses:', err));
+    }
+
+    function loadEnrollments() {
+        fetch('/enrollments')
+            .then(res => res.json())
+            .then(data => {
+                const table = data.map(enrollment => `
+                <tr>
+                    <td>${enrollment.id}</td>
+                    <td>${enrollment.studentId}</td>
+                    <td>${enrollment.courseId}</td>
+                    <td>${enrollment.enrollmentDate ? new Date(enrollment.enrollmentDate).toLocaleDateString() : ''}</td>
+                    <td>
+                      <button class="btn btn-danger btn-sm" onclick="deleteEnrollment(${enrollment.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+                document.getElementById('enrollments-table').innerHTML = table;
+            })
+            .catch(err => console.error('Failed to load enrollments:', err));
+    }
+
+
+    function deleteEnrollment(id) {
+        if (!confirm(`Are you sure you want to delete enrollment ID ${id}?`)) return;
+
+        fetch(`/enrollments/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to delete enrollment');
+                alert(`Enrollment ID ${id} deleted successfully.`);
+                loadEnrollments();
+            })
+            .catch(err => alert('Error deleting enrollment: ' + err.message));
+    }
+    function deleteCourse(id) {
+        if (!confirm(`Are you sure you want to delete course ID ${id}?`)) return;
+
+        fetch(`/courses/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to delete course');
+                alert(`Course ID ${id} deleted successfully.`);
+                loadCourses();
+            })
+            .catch(err => alert('Error deleting course: ' + err.message));
+    }
+
+    function deleteStudent(id) {
+        if (!confirm(`Are you sure you want to delete student ID ${id}?`)) return;
+
+        fetch(`/students/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to delete student');
+                alert(`Student ID ${id} deleted successfully.`);
+                loadStudents();
+            })
+            .catch(err => alert('Error deleting student: ' + err.message));
+    }
+
+    document.getElementById('student-courses-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const studentId = document.getElementById('filterStudentId').value;
+        if (!studentId || studentId < 1) {
+            alert('Please enter a valid Student ID');
+            return;
+        }
+
+        fetch(`/students/${studentId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Student not found.');
+                }
+                return response.json();
+            })
+            .then(student => {
+                return fetch(`/enrollments/by-student/${studentId}`);
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load enrollments.');
+                }
+                return response.json();
+            })
+            .then(courses => {
+                const tbody = document.getElementById('student-courses-table');
+                tbody.innerHTML = '';
+
+                if (courses.length > 0) {
+                    courses.forEach(course => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${course.id}</td>
+                        <td>${course.title}</td>
+                        <td>${course.credits}</td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error.message);
+                document.getElementById('student-courses-table').innerHTML = '';
+            });
+    });
+
+
+    document.getElementById('course-search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const courseId = document.getElementById('searchCourseId').value;
+
+        if (!courseId) {
+            alert('Please enter a Course ID.');
+            return;
+        }
+
+        fetch(`/courses/${courseId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Course not found.');
+                }
+                return response.json();
+            })
+            .then(course => {
+                const courseInfoTable = document.getElementById('course-info-table');
+                courseInfoTable.innerHTML = `
+        <tr>
+          <td>${course.id}</td>
+          <td>${course.title}</td>
+          <td>${course.credits}</td>
+        </tr>
+      `;
+            })
+            .catch(error => {
+                alert(error.message);
+                document.getElementById('course-info-table').innerHTML = '';
+            });
+    });
+
+
+    document.getElementById('student-search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const studentId = document.getElementById('searchStudentId').value;
+
+        if (!studentId) {
+            alert('Please enter a Student ID.');
+            return;
+        }
+
+        fetch(`/students/${studentId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Student not found.');
+                }
+                return response.json();
+            })
+            .then(student => {
+                const studentInfoTable = document.getElementById('student-info-table');
+                studentInfoTable.innerHTML = `
+        <tr>
+          <td>${student.id}</td>
+          <td>${student.name}</td>
+          <td>${student.email}</td>
+          <td>${student.groupName}</td>
+        </tr>
+      `;
+            })
+            .catch(error => {
+                alert(error.message);
+                document.getElementById('student-info-table').innerHTML = '';
+            });
+    });
+
+    document.getElementById('student-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const student = {
+            name: e.target.studentName.value.trim(),
+            email: e.target.studentEmail.value.trim(),
+            groupName: e.target.studentGroupName.value.trim()
+        };
+        fetch('/students', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(student)
+        }).then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            loadStudents();
+            e.target.reset();
+        }).catch(err => alert('Failed to add student: ' + err.message));
+    });
+
+    document.getElementById('course-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const course = {
+            title: e.target.courseTitle.value.trim(),
+            credits: Number(e.target.courseCredits.value)
+        };
+        fetch('/courses', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(course)
+        }).then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            loadCourses();
+            e.target.reset();
+        }).catch(err => alert('Failed to add course: ' + err.message));
+    });
+
+    document.getElementById('enrollment-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const enrollment = {
+            studentId: Number(e.target.enrollmentStudentId.value),
+            courseId: Number(e.target.enrollmentCourseId.value),
+            enrollmentDate: e.target.enrollmentDate.value
+        };
+        fetch('/enrollments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(enrollment)
+        }).then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            loadEnrollments();
+            e.target.reset();
+        }).catch(err => alert('Failed to add enrollment: ' + err.message));
+    });
+
+    function logout() {
+        window.location.href = '/logout';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadStudents();
+        loadCourses();
+        loadEnrollments();
+    });
+
+</script>
+</body>
+</html>
